@@ -45,15 +45,15 @@ fun MainNavGraph(
         startDestination = Map,
         modifier = modifier
     ) {
+        composable<Map> {
+            MapScreen()
+        }
         composable<FeedsList> {
             FeedScreen(
                 onChronologyClick = { chronology ->
                     openChronology(chronology)
                 }
             )
-        }
-        composable<Map> {
-            MapScreen()
         }
         composable<Profile> {
             ProfileScreen(

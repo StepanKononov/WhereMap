@@ -3,4 +3,8 @@
     <string name="nav_tab_map">Map</string>
     <string name="nav_tab_feed">Feed</string>
     <string name="nav_tab_profile">Profile</string>
+    <string name="dialog_confirm_button">Confirm</string>
+    <string name="dialog_dismiss_button">Dismiss</string>
+    <string name="location_permission_dialog_title">Grant permissions</string>
+    <string name="location_permission_dialog_text">The app needs geolocation access. Enable it in settings.</string>
 </resources>

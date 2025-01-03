@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,4 +79,7 @@ dependencies {
     // map box
     implementation("com.mapbox.maps:android:11.9.0")
     implementation("com.mapbox.extension:maps-compose:11.9.0")
+
+    // tooling
+    implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
 }

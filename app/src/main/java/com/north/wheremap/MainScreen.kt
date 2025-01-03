@@ -1,5 +1,8 @@
 package com.north.wheremap
 
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -14,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -52,11 +56,18 @@ fun MainScreen(
                 }
             }
         },
+        modifier = modifier.fillMaxSize()
     ) { innerPadding ->
         MainNavGraph(
             navController,
             openChronology,
-            modifier = modifier.padding(innerPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    bottom = innerPadding.calculateBottomPadding(),
+                    start = innerPadding.calculateStartPadding(LayoutDirection.Ltr),
+                    end = innerPadding.calculateEndPadding(LayoutDirection.Ltr)
+                ),
         )
     }
 }
