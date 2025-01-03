@@ -1,4 +1,4 @@
-package com.north.wheremap.ui.theme
+package com.north.wheremap.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

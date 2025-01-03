@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -61,6 +62,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3")
 
     // hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
@@ -69,4 +71,11 @@ dependencies {
 
     // view model
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    // navigation
+    implementation("androidx.navigation:navigation-compose:2.8.4")
+
+    // map box
+    implementation("com.mapbox.maps:android:11.9.0")
+    implementation("com.mapbox.extension:maps-compose:11.9.0")
 }
