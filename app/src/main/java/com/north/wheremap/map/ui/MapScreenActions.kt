@@ -7,6 +7,8 @@ sealed interface MapScreenActions {
         val location: Location
     ) : MapScreenActions
 
+    data object ResetSelectedPoint : MapScreenActions
+
     data class SubmitLocationPermission(
         val acceptedLocationPermission: Boolean,
     ) : MapScreenActions

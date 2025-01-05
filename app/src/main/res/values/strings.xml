@@ -7,4 +7,6 @@
     <string name="dialog_dismiss_button">Dismiss</string>
     <string name="location_permission_dialog_title">Grant permissions</string>
     <string name="location_permission_dialog_text">The app needs geolocation access. Enable it in settings.</string>
+    <string name="save_button_text">Сохранить</string>
+    <string name="close_button_text">Закрыть</string>
 </resources>
