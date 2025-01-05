@@ -1,6 +1,5 @@
 package com.north.wheremap.core.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -8,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.north.wheremap.MainScreen
+import com.north.wheremap.collection.ui.AddToCollectionRoot
 import com.north.wheremap.feeds.ui.FeedScreen
 import com.north.wheremap.map.location.Location
 import com.north.wheremap.map.ui.MapScreenRoot
@@ -32,7 +32,7 @@ fun NavigationRoot() {
                 typeOf<Location>() to CustomNavType.LocationType
             )
         ) {
-            Text("AddToCollectionRoute")
+            AddToCollectionRoot()
         }
 
         composable<MainGraphRoute> {

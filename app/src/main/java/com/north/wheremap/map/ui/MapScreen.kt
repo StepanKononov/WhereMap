@@ -51,12 +51,17 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
+import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import com.mapbox.maps.plugin.gestures.gestures
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
+import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.north.wheremap.R
 import com.north.wheremap.core.navigation.AddToCollectionRoute
 import com.north.wheremap.core.ui.BaseConfirmDialog
@@ -125,7 +130,7 @@ fun MapScreen(
                             containerColor = MaterialTheme.colorScheme.tertiary
                         )
                         Spacer(Modifier.size(32.dp))
-                        currentLocation?.let {
+                        selectedPoint?.let {
                             ExtendedFloatingActionButton(
                                 onClick = {
                                     onAddNewPoint(AddToCollectionRoute(it))
@@ -190,13 +195,34 @@ private fun MapView(
             )
         }
     ) {
+        // TODO: Мы можем открывать карту сразу с нужной точки? (сразу на позиции пользователя)
         currentLocation?.renderLocationMarker(
             color = MaterialTheme.colorScheme.primary
         )
         selectedPoint?.renderLocationMarker(
             color = MaterialTheme.colorScheme.tertiary
         )
+/*
+        MapEffect(key1 = Unit) { mapView ->
+            val onIndicatorBearingChangedListener = OnIndicatorBearingChangedListener {
+                mapViewportState.setCameraOptions(CameraOptions.Builder().bearing(it).build())
+            }
+
+            val onIndicatorPositionChangedListener = OnIndicatorPositionChangedListener {
+                mapViewportState.setCameraOptions(CameraOptions.Builder().center(it).build())
+                mapView.gestures.focalPoint = mapView.mapboxMap.pixelForCoordinate(it)
+            }
+            mapView.location.apply {
+                enabled = true
+                addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener)
+                addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener)
+            }
+        }
+
+ */
     }
+
+
 }
 
 @Composable
