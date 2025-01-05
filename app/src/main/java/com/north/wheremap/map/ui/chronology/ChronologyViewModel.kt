@@ -3,7 +3,7 @@ package com.north.wheremap.map.ui.chronology
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
-import com.north.wheremap.core.navigation.Chronology
+import com.north.wheremap.core.navigation.ChronologyRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -11,6 +11,6 @@ import javax.inject.Inject
 class ChronologyViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val chronology: Chronology = savedStateHandle.toRoute()
-    val id: Long = chronology.id
+    private val chronologyRoute: ChronologyRoute = savedStateHandle.toRoute()
+    val id: Long = chronologyRoute.id
 }

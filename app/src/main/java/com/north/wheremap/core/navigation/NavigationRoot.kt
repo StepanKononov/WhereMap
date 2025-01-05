@@ -1,5 +1,6 @@
 package com.north.wheremap.core.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -8,26 +9,39 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.north.wheremap.MainScreen
 import com.north.wheremap.feeds.ui.FeedScreen
-import com.north.wheremap.map.ui.MapScreen
+import com.north.wheremap.map.location.Location
+import com.north.wheremap.map.ui.MapScreenRoot
 import com.north.wheremap.map.ui.chronology.ChronologyScreen
 import com.north.wheremap.profile.ui.ProfileScreen
+import kotlin.reflect.typeOf
 
 @Composable
 fun NavigationRoot() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = MainGraph
+        startDestination = MainGraphRoute,
     ) {
         // TODO: вложенный граф авторизации
-        composable<Chronology> {
+        composable<ChronologyRoute> {
             ChronologyScreen()
         }
 
-        composable<MainGraph> {
+        composable<AddToCollectionRoute>(
+            typeMap = mapOf(
+                typeOf<Location>() to CustomNavType.LocationType
+            )
+        ) {
+            Text("AddToCollectionRoute")
+        }
+
+        composable<MainGraphRoute> {
             MainScreen(
                 openChronology = { chronology ->
                     navController.navigate(chronology)
+                },
+                openAddToCollection = { addToCollection ->
+                    navController.navigate(addToCollection)
                 }
             )
         }
@@ -37,25 +51,28 @@ fun NavigationRoot() {
 @Composable
 fun MainNavGraph(
     navController: NavHostController,
-    openChronology: (Chronology) -> Unit,
+    openChronology: (ChronologyRoute) -> Unit,
+    openAddToCollection: (AddToCollectionRoute) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
         navController = navController,
-        startDestination = Map,
+        startDestination = MapRoute,
         modifier = modifier
     ) {
-        composable<Map> {
-            MapScreen()
+        composable<MapRoute> {
+            MapScreenRoot(
+                onAddNewPoint = openAddToCollection
+            )
         }
-        composable<FeedsList> {
+        composable<FeedsListRoute> {
             FeedScreen(
                 onChronologyClick = { chronology ->
                     openChronology(chronology)
                 }
             )
         }
-        composable<Profile> {
+        composable<ProfileRoute> {
             ProfileScreen(
                 onChronologyClick = { chronology ->
                     openChronology(chronology)

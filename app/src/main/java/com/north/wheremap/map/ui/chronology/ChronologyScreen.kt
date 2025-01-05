@@ -8,5 +8,5 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun ChronologyScreen(viewModel: ChronologyViewModel = hiltViewModel()) {
     // TODO: загружать список точек по id, и отображать их на карте
     val id = viewModel.id
-    Text(text = "Chronology Screen with ID: $id")
+    Text(text = "ChronologyRoute Screen with ID: $id")
 }

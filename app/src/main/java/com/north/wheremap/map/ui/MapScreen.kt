@@ -45,13 +45,25 @@ import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.north.wheremap.R
+import com.north.wheremap.core.navigation.AddToCollectionRoute
 import com.north.wheremap.core.ui.BaseConfirmDialog
 import com.north.wheremap.map.location.Location
 import com.north.wheremap.map.location.toLocation
 
 @Composable
+fun MapScreenRoot(
+    onAddNewPoint: (AddToCollectionRoute) -> Unit,
+) {
+    MapScreen(
+        onAddNewPoint
+    )
+}
+
+
+@Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun MapScreen(
+    onAddNewPoint: (AddToCollectionRoute) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MapViewModel = hiltViewModel(),
 ) {
@@ -80,34 +92,15 @@ fun MapScreen(
             viewModel = viewModel,
             currentLocation = currentLocation,
             mapViewportState = mapViewportState,
+            onAddNewPoint = onAddNewPoint,
             modifier = modifier
         )
     }
 }
 
-@OptIn(ExperimentalPermissionsApi::class)
-@Composable
-private fun rememberPermissionsState(viewModel: MapViewModel): MultiplePermissionsState {
-    return rememberMultiplePermissionsState(
-        listOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
-    ) { permissions ->
-        val hasCoarsePermission = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-        val hasFinePermission = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
-
-        val accepted = hasCoarsePermission && hasFinePermission
-        viewModel.onAction(MapScreenActions.SubmitLocationPermission(accepted))
-    }.apply {
-        LaunchedEffect(allPermissionsGranted) {
-            viewModel.onAction(MapScreenActions.SubmitLocationPermission(allPermissionsGranted))
-        }
-    }
-}
-
 @Composable
 private fun MapView(
+    onAddNewPoint: (AddToCollectionRoute) -> Unit,
     viewModel: MapViewModel,
     currentLocation: Location?,
     mapViewportState: MapViewportState,
@@ -120,7 +113,7 @@ private fun MapView(
         logo = {},
         attribution = {},
         onMapLongClickListener = { point ->
-            viewModel.onAction(MapScreenActions.SetNewPoint(point.toLocation()))
+            onAddNewPoint(AddToCollectionRoute(point.toLocation()))
             true
         },
         style = {
@@ -190,6 +183,37 @@ private fun LocationFloatingActionButton(
     }
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+private fun rememberPermissionsState(viewModel: MapViewModel): MultiplePermissionsState {
+    return rememberMultiplePermissionsState(
+        listOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    ) { permissions ->
+        val hasCoarsePermission = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+        val hasFinePermission = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
+
+        val accepted = hasCoarsePermission && hasFinePermission
+        viewModel.onAction(MapScreenActions.SubmitLocationPermission(accepted))
+    }.apply {
+        LaunchedEffect(allPermissionsGranted) {
+            viewModel.onAction(MapScreenActions.SubmitLocationPermission(allPermissionsGranted))
+        }
+    }
+}
+
+@Composable
+private fun Location.renderLocationMarker(
+    color: Color
+) {
+    CircleAnnotation(point = Point.fromLngLat(this.long, this.lat)) {
+        circleRadius = 8.0
+        circleColor = color
+    }
+}
+
 private fun MapViewportState.flyToLocation(location: Location) {
     this.flyTo(
         CameraOptions.Builder()
@@ -202,14 +226,4 @@ private fun MapViewportState.flyToLocation(location: Location) {
             duration(2_000)
         }
     )
-}
-
-@Composable
-private fun Location.renderLocationMarker(
-    color: Color
-) {
-    CircleAnnotation(point = Point.fromLngLat(this.long, this.lat)) {
-        circleRadius = 8.0
-        circleColor = color
-    }
 }

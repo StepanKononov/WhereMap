@@ -11,11 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.north.wheremap.core.navigation.Chronology
+import com.north.wheremap.core.navigation.ChronologyRoute
 
 @Composable
 fun ProfileScreen(
-    onChronologyClick: (Chronology) -> Unit,
+    onChronologyClick: (ChronologyRoute) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     // TODO: aватарка?, logout и список собсвтенных подборок?
@@ -25,7 +25,7 @@ fun ProfileScreen(
             .fillMaxWidth()
             .windowInsetsPadding(WindowInsets.systemBars)
             .clickable {
-                onChronologyClick(Chronology(2))
+                onChronologyClick(ChronologyRoute(2))
             },
     ) {
         Text(

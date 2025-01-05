@@ -1,18 +1,22 @@
 package com.north.wheremap.core.navigation
 
+import com.north.wheremap.map.location.Location
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object MainGraph
+data object MainGraphRoute
 
 @Serializable
-data object FeedsList
+data object FeedsListRoute
 
 @Serializable
-data object Map
+data object MapRoute
 
 @Serializable
-data object Profile
+data object ProfileRoute
 
 @Serializable
-data class Chronology(val id: Long)
+data class ChronologyRoute(val id: Long)
+
+@Serializable
+data class AddToCollectionRoute(val point: Location)

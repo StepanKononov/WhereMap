@@ -12,11 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import com.north.wheremap.core.navigation.Chronology
+import com.north.wheremap.core.navigation.ChronologyRoute
 
 @Composable
 fun FeedScreen(
-    onChronologyClick: (Chronology) -> Unit,
+    onChronologyClick: (ChronologyRoute) -> Unit,
     modifier: Modifier = Modifier
 ) {
     // TODO: лента с подборками других пользователей
@@ -26,7 +26,7 @@ fun FeedScreen(
             .fillMaxWidth()
             .windowInsetsPadding(WindowInsets.systemBars)
             .clickable {
-                onChronologyClick(Chronology(1))
+                onChronologyClick(ChronologyRoute(1))
             },
     ) {
         Text(
