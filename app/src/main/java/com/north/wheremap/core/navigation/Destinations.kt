@@ -1,6 +1,6 @@
 package com.north.wheremap.core.navigation
 
-import com.north.wheremap.map.location.Location
+import com.north.wheremap.core.domain.location.Location
 import kotlinx.serialization.Serializable
 
 @Serializable

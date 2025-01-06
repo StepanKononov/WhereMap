@@ -51,22 +51,17 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
-import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
-import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
-import com.mapbox.maps.plugin.locationcomponent.location
 import com.north.wheremap.R
 import com.north.wheremap.core.navigation.AddToCollectionRoute
 import com.north.wheremap.core.ui.BaseConfirmDialog
 import com.north.wheremap.core.ui.ObserveAsEvents
-import com.north.wheremap.map.location.Location
+import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.map.location.toLocation
 
 @Composable

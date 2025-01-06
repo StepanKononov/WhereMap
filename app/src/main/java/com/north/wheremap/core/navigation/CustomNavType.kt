@@ -3,7 +3,7 @@ package com.north.wheremap.core.navigation
 import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavType
-import com.north.wheremap.map.location.Location
+import com.north.wheremap.core.domain.location.Location
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

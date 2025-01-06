@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
 import com.north.wheremap.core.navigation.AddToCollectionRoute
 import com.north.wheremap.core.navigation.CustomNavType
-import com.north.wheremap.map.location.Location
+import com.north.wheremap.core.domain.location.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

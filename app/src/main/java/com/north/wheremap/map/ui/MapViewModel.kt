@@ -2,7 +2,7 @@ package com.north.wheremap.map.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.north.wheremap.map.location.Location
+import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.map.location.LocationObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

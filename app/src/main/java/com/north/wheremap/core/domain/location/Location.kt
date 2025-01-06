@@ -1,9 +1,9 @@
-package com.north.wheremap.map.location
+package com.north.wheremap.core.domain.location
 
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Location(
     val lat: Double,
-    val long: Double
+    val long: Double,
 )

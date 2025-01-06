@@ -1,6 +1,6 @@
 package com.north.wheremap.map.ui
 
-import com.north.wheremap.map.location.Location
+import com.north.wheremap.core.domain.location.Location
 
 sealed interface MapScreenActions {
     data class SetNewPoint(
