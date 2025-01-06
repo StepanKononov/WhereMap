@@ -3,6 +3,8 @@ package com.north.wheremap.core.data.database.di
 import android.content.Context
 import androidx.room.Room
 import com.north.wheremap.core.data.database.AppDatabase
+import com.north.wheremap.core.data.database.RoomLocalCollectionDataSource
+import com.north.wheremap.core.domain.collection.CollectionLocalDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +27,13 @@ class DatabaseModule {
             name = "map.db",
         ).build()
     }
+
+    @Provides
+    @Singleton
+    fun providesCollectionLocalDataSource(impl: RoomLocalCollectionDataSource):
+            CollectionLocalDataSource = impl
+
+    @Provides
+    @Singleton
+    fun providesCollectionDao(db: AppDatabase) = db.collectionDao
 }

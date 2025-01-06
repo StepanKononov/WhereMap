@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import org.bson.types.ObjectId
 
 @Entity(
     tableName = "point",
@@ -21,17 +22,22 @@ import androidx.room.PrimaryKey
     ],
 )
 data class PointEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    val id: Long = 0,
     @ColumnInfo(name = "collection_id")
-    val collectionId: Long,
+    val collectionId: String,
+
     @ColumnInfo(name = "latitude")
     val latitude: Double,
+
     @ColumnInfo(name = "longitude")
     val longitude: Double,
+
     @ColumnInfo(name = "name")
     val name: String?,
+
     @ColumnInfo(name = "description")
     val description: String?,
+
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "id")
+    val id: String = ObjectId().toHexString()
 )

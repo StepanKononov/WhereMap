@@ -13,6 +13,6 @@ interface PointDao {
     suspend fun upsertPoint(point: PointEntity)
 
     @Query("SELECT * FROM point WHERE collection_id = :collectionId")
-    fun getPointsByCollectionFlow(collectionId: Long): Flow<List<PointEntity>>
+    fun getPointsByCollectionFlow(collectionId: String): Flow<List<PointEntity>>
 
 }

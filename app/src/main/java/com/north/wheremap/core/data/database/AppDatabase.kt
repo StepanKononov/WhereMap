@@ -17,6 +17,6 @@ import com.north.wheremap.core.data.database.entity.PointEntity
     version = 1,
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun collectionDao(): CollectionDao
-    abstract fun pointDao(): PointDao
+    abstract val collectionDao: CollectionDao
+    abstract val pointDao: PointDao
 }

@@ -3,9 +3,10 @@ package com.north.wheremap.collection.ui
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
+import com.north.wheremap.core.domain.collection.CollectionRepository
+import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.core.navigation.AddToCollectionRoute
 import com.north.wheremap.core.navigation.CustomNavType
-import com.north.wheremap.core.domain.location.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +15,8 @@ import kotlin.reflect.typeOf
 
 @HiltViewModel
 class AddToCollectionViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    collectionRepository: CollectionRepository,
 ) : ViewModel() {
 
     private val params: AddToCollectionRoute = savedStateHandle.toRoute(
@@ -30,7 +32,6 @@ class AddToCollectionViewModel @Inject constructor(
     )
 
     val state = _state.asStateFlow()
-
 
 
 }
