@@ -1,7 +1,9 @@
 package com.north.wheremap.core.data.di
 
 import com.north.wheremap.core.data.collection.CollectionRepositoryImpl
+import com.north.wheremap.core.data.point.PointRepositoryImpl
 import com.north.wheremap.core.domain.collection.CollectionRepository
+import com.north.wheremap.core.domain.point.PointRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,4 +18,8 @@ interface CoreDataModule {
     @Binds
     @Singleton
     fun bindCollectionRepository(impl: CollectionRepositoryImpl): CollectionRepository
+
+    @Binds
+    @Singleton
+    fun bindPointRepository(impl: PointRepositoryImpl): PointRepository
 }

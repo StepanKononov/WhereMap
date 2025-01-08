@@ -9,10 +9,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PointDao {
 
+    @Query("SELECT * FROM point WHERE collection_id = :collectionId")
+    fun getPointsByCollection(collectionId: String): Flow<List<PointEntity>>
+
     @Upsert
     suspend fun upsertPoint(point: PointEntity)
 
-    @Query("SELECT * FROM point WHERE collection_id = :collectionId")
-    fun getPointsByCollectionFlow(collectionId: String): Flow<List<PointEntity>>
+    @Query("DELETE FROM point WHERE id=:id")
+    suspend fun deletePoint(id: String)
 
 }

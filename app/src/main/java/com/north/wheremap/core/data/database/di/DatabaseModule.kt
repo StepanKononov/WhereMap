@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.north.wheremap.core.data.database.AppDatabase
 import com.north.wheremap.core.data.database.RoomLocalCollectionDataSource
+import com.north.wheremap.core.data.database.RoomLocalPointDataSource
 import com.north.wheremap.core.domain.collection.CollectionLocalDataSource
+import com.north.wheremap.core.domain.point.PointLocalDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,5 +37,14 @@ class DatabaseModule {
 
     @Provides
     @Singleton
+    fun providesPointLocalDataSource(impl: RoomLocalPointDataSource):
+            PointLocalDataSource = impl
+
+    @Provides
+    @Singleton
     fun providesCollectionDao(db: AppDatabase) = db.collectionDao
+
+    @Provides
+    @Singleton
+    fun providesPointDao(db: AppDatabase) = db.pointDao
 }

@@ -8,8 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.north.wheremap.MainScreen
 import com.north.wheremap.collection.ui.AddToCollectionRoot
-import com.north.wheremap.feeds.ui.FeedScreen
 import com.north.wheremap.core.domain.location.Location
+import com.north.wheremap.feeds.ui.FeedScreen
 import com.north.wheremap.map.ui.MapScreenRoot
 import com.north.wheremap.map.ui.chronology.ChronologyScreen
 import com.north.wheremap.profile.ui.ProfileScreen
@@ -32,7 +32,11 @@ fun NavigationRoot() {
                 typeOf<Location>() to CustomNavType.LocationType
             )
         ) {
-            AddToCollectionRoot()
+            AddToCollectionRoot(
+                onConfirm = {
+                    navController.navigateUp()
+                }
+            )
         }
 
         composable<MainGraphRoute> {

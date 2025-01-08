@@ -38,10 +38,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.compose.currentStateAsState
 import com.mapbox.geojson.Point
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapboxMap
@@ -49,16 +53,20 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.rememberMapState
 import com.mapbox.maps.extension.compose.style.GenericStyle
+import com.north.wheremap.R
 import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.core.ui.ObserveAsEvents
 
+
 @Composable
 fun AddToCollectionRoot(
-    onConfirm: () -> Unit = {},
+    onConfirm: () -> Unit,
     onClickCreateCollection: () -> Unit = {},
     viewModel: AddToCollectionViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
+    val lifecycleState = LocalLifecycleOwner.current.lifecycle.currentStateAsState()
+
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
             AddToCollectionEvents.Confirm -> onConfirm()
@@ -66,26 +74,43 @@ fun AddToCollectionRoot(
         }
     }
 
+
+
     AddToCollectionContent(
         state = state.value,
         onConfirm = {
-            viewModel.onAction(AddToCollectionActions.ConfirmSavePoint)
-            onConfirm()
+            viewModel.runAction(lifecycleState.value, AddToCollectionActions.ConfirmSavePoint)
         },
         onCreateNewCollection = {
-            viewModel.onAction(AddToCollectionActions.CreateNewCollection)
+            viewModel.runAction(lifecycleState.value, AddToCollectionActions.CreateNewCollection)
         },
         onPointNameChange = { newName ->
-            viewModel.onAction(AddToCollectionActions.UpdatePointName(newName))
+            viewModel.runAction(
+                lifecycleState.value,
+                AddToCollectionActions.UpdatePointName(newName)
+            )
         },
         onPointDescriptionChange = { newDescription ->
-            viewModel.onAction(AddToCollectionActions.UpdatePointDescription(newDescription))
+            viewModel.runAction(
+                lifecycleState.value,
+                AddToCollectionActions.UpdatePointDescription(newDescription)
+            )
         },
         onSelectCollection = { collectionId ->
-            viewModel.onAction(AddToCollectionActions.SetSelectedCollection(collectionId))
+            viewModel.runAction(
+                lifecycleState.value,
+                AddToCollectionActions.SetSelectedCollection(collectionId)
+            )
         }
     )
 
+}
+
+// Действия только в RESUMED для исключения дублирования сохранения точек в бд
+fun AddToCollectionViewModel.runAction(state: Lifecycle.State, actions: AddToCollectionActions) {
+    if (state == Lifecycle.State.RESUMED) {
+        onAction(actions)
+    }
 }
 
 @Composable
@@ -116,7 +141,7 @@ fun AddToCollectionContent(
                 Spacer(Modifier.height(16.dp))
                 EditableField(
                     value = state.pointName,
-                    label = "Название точки",
+                    label = stringResource(R.string.point_name_text_hint),
                     onValueChange = onPointNameChange,
                     imeAction = ImeAction.Next
                 )
@@ -125,7 +150,7 @@ fun AddToCollectionContent(
                 Spacer(Modifier.height(16.dp))
                 EditableField(
                     value = state.pointDescription,
-                    label = "Описание",
+                    label = stringResource(R.string.point_description_text_hint),
                     onValueChange = onPointDescriptionChange,
                     imeAction = ImeAction.Done
                 )
@@ -133,7 +158,7 @@ fun AddToCollectionContent(
             item {
                 Spacer(Modifier.height(16.dp))
                 Text(
-                    "Коллекции",
+                    stringResource(R.string.collection_section_title),
                     style = MaterialTheme.typography.titleLarge
                 )
             }
@@ -149,7 +174,7 @@ fun AddToCollectionContent(
                     ) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = null)
                         Spacer(Modifier.size(8.dp))
-                        Text("Создать новую коллекцию")
+                        Text(stringResource(R.string.create_new_collection_btn_text))
                     }
                 }
             }
@@ -171,10 +196,10 @@ fun AddToCollectionContent(
 @Composable
 fun AddToCollectionTopBar(onConfirm: () -> Unit) {
     TopAppBar(
-        title = { Text("Добавить в коллекцию") },
+        title = { Text(stringResource(R.string.add_to_collection_screen_title)) },
         actions = {
             TextButton(onClick = onConfirm) {
-                Text("Готово")
+                Text(stringResource(R.string.done_btn_text))
             }
         }
     )
@@ -275,7 +300,10 @@ fun CollectionItem(
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = if (collection.isPrivate) "Личная" else "Публичная",
+                    text = if (collection.isPrivate)
+                        stringResource(R.string.private_collection)
+                    else
+                        stringResource(R.string.public_collection),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
