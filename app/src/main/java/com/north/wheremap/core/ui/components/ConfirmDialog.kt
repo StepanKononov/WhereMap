@@ -1,4 +1,4 @@
-package com.north.wheremap.core.ui
+package com.north.wheremap.core.ui.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon

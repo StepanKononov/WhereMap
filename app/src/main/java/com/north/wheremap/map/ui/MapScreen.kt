@@ -59,7 +59,7 @@ import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.north.wheremap.R
 import com.north.wheremap.core.navigation.AddToCollectionRoute
-import com.north.wheremap.core.ui.BaseConfirmDialog
+import com.north.wheremap.core.ui.components.BaseConfirmDialog
 import com.north.wheremap.core.ui.ObserveAsEvents
 import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.map.location.toLocation
