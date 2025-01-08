@@ -8,9 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 @EntryPoint
 @InstallIn(SingletonComponent::class)
 interface DispatcherEntryPoint {
-    @IoDispatcher
-    fun ioDispatcher(): CoroutineDispatcher
 
-    @MainDispatcherImmediate
+    @MainImmediateDispatcher
     fun mainImmediate(): CoroutineDispatcher
 }
