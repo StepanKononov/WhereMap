@@ -20,3 +20,15 @@ data class ChronologyRoute(val id: Long)
 
 @Serializable
 data class AddToCollectionRoute(val point: Location)
+
+@Serializable
+data object AuthRoute
+
+@Serializable
+data object IntroRoute
+
+@Serializable
+data object LoginRoute
+
+@Serializable
+data object RegisterRoute

@@ -53,7 +53,7 @@ fun GradientBackground(
                 .fillMaxSize()
                 .then(
                     if (isAtLeastAndroid12) {
-                        Modifier.blur(smallDimension / 2f)
+                        Modifier.blur(smallDimension / 1.5f)
                     } else Modifier
                 )
                 .background(
@@ -64,9 +64,9 @@ fun GradientBackground(
                         ),
                         center = Offset(
                             x = screenWidthPx / 2f,
-                            y = -100f
+                            y = -120f
                         ),
-                        radius =smallDimensionPx.toFloat()
+                        radius = smallDimensionPx / 1.1f
                     )
                 )
         )
@@ -86,7 +86,7 @@ fun GradientBackground(
     }
 }
 
-@Preview(showBackground = true,  uiMode = UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun GradientBackgroundPreview() {
     WhereMapTheme {

@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.north.wheremap.MainScreen
+import com.north.wheremap.auth.ui.IntroScreenRoot
+import com.north.wheremap.auth.ui.register.RegisterScreenRoot
 import com.north.wheremap.collection.ui.AddToCollectionRoot
 import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.feeds.ui.FeedScreen
@@ -22,11 +24,10 @@ fun NavigationRoot() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = MainGraphRoute,
+        startDestination = AuthRoute,
     ) {
 
         authGraph(navController)
-        // TODO: вложенный граф авторизации
         composable<ChronologyRoute> {
             ChronologyScreen()
         }
@@ -57,63 +58,54 @@ fun NavigationRoot() {
 }
 
 private fun NavGraphBuilder.authGraph(navController: NavHostController) {
-    navigation(
-        startDestination = "intro",
-        route = "auth"
+    navigation<AuthRoute>(
+        startDestination = IntroRoute,
     ) {
-        composable(route = "intro") {
-            /*
+        composable<IntroRoute> {
             IntroScreenRoot(
                 onSignUpClick = {
-                    navController.navigate("register")
+                    navController.navigate(RegisterRoute)
                 },
                 onSignInClick = {
-                    navController.navigate("login")
-                }
-            ) */
-        }
-        composable(route = "register") {
-            /*
-            RegisterScreenRoot(
-                onSignInClick = {
-                    navController.navigate("login") {
-                        popUpTo("register") {
-                            inclusive = true
-                            saveState = true
-                        }
-                        restoreState = true
-                    }
-                },
-                onSuccessfulRegistration = {
-                    navController.navigate("login")
-                }
-            )*/
-        }
-        composable("login") {
-            /*
-            LoginScreenRoot(
-                onLoginSuccess = {
-                    navController.navigate("run") {
-                        popUpTo("auth") {
-                            inclusive = true
-                        }
-                    }
-                },
-                onSignUpClick = {
-                    navController.navigate("register") {
-                        popUpTo("login") {
-                            inclusive = true
-                            saveState = true
-                        }
-                        restoreState = true
-                    }
+                    navController.navigate(LoginRoute)
                 }
             )
-            */
+        }
+        composable<RegisterRoute> {
+            RegisterScreenRoot(
+                onSignInClick = {
+
+                },
+                onSuccessfulRegistration = {
+                    // navController.navigate("login")
+                }
+            )
         }
     }
-
+    composable<LoginRoute> {
+        /*
+        LoginScreenRoot(
+            onLoginSuccess = {
+                navController.navigate("run") {
+                    popUpTo("auth") {
+                        inclusive = true
+                    }
+                }
+            },
+            onSignUpClick = {
+                navController.navigate("register") {
+                    popUpTo("login") {
+                        inclusive = true
+                        saveState = true
+                    }
+                    restoreState = true
+                }
+            }
+        )
+        */
+    }
 }
+
 
 @Composable
 fun MainNavGraph(
