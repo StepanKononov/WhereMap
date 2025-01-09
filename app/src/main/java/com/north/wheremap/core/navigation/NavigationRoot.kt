@@ -81,26 +81,16 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
         }
     }
     composable<LoginRoute> {
-        /*
+
         LoginScreenRoot(
             onLoginSuccess = {
-                navController.navigate("run") {
-                    popUpTo("auth") {
-                        inclusive = true
-                    }
-                }
+
             },
             onSignUpClick = {
-                navController.navigate("register") {
-                    popUpTo("login") {
-                        inclusive = true
-                        saveState = true
-                    }
-                    restoreState = true
-                }
+
             }
         )
-        */
+
     }
 }
 
