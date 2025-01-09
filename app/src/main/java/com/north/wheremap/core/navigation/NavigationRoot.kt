@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.north.wheremap.MainScreen
 import com.north.wheremap.auth.ui.IntroScreenRoot
+import com.north.wheremap.auth.ui.login.LoginScreenRoot
 import com.north.wheremap.auth.ui.register.RegisterScreenRoot
 import com.north.wheremap.collection.ui.AddToCollectionRoot
 import com.north.wheremap.core.domain.location.Location
@@ -74,23 +75,40 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
         composable<RegisterRoute> {
             RegisterScreenRoot(
                 onSignInClick = {
+                    navController.navigate(LoginRoute) {
+                        popUpTo(RegisterRoute) {
+                            inclusive = true
+                            saveState = true
+                        }
+                        restoreState = true
+                    }
                 },
                 onSuccessfulRegistration = {
+                    navController.navigate(LoginRoute)
                 }
             )
         }
-    }
-    composable<LoginRoute> {
+        composable<LoginRoute> {
+            LoginScreenRoot(
+                onLoginSuccess = {
+                    navController.navigate(MainGraphRoute) {
+                        popUpTo(AuthRoute) {
+                            inclusive = true
+                        }
+                    }
+                },
+                onSignUpClick = {
+                    navController.navigate(RegisterRoute) {
+                        popUpTo(LoginRoute) {
+                            inclusive = true
+                            saveState = true
+                        }
+                        restoreState = true
+                    }
+                }
+            )
 
-        LoginScreenRoot(
-            onLoginSuccess = {
-
-            },
-            onSignUpClick = {
-
-            }
-        )
-
+        }
     }
 }
 

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -74,7 +76,8 @@ fun LoginScreenRoot(
         onAction = { action ->
             when (action) {
                 is LoginAction.OnRegisterClick -> onSignUpClick()
-                else -> Unit
+                LoginAction.OnLoginClick -> Unit
+                LoginAction.OnTogglePasswordVisibility -> Unit
             }
             viewModel.onAction(action)
         }
@@ -93,15 +96,15 @@ private fun LoginScreen(
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
                 .padding(vertical = 32.dp)
-                .padding(top = 16.dp)
+                .padding(top = 64.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.hi_there),
-                fontWeight = FontWeight.SemiBold,
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = stringResource(id = R.string.runique_welcome_text),
+                text = stringResource(id = R.string.wheremap_welcome_text),
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -110,7 +113,7 @@ private fun LoginScreen(
 
             WhereMapTextField(
                 state = state.email,
-                startIcon = EmailIcon,
+                startIcon = Icons.Rounded.Email,
                 endIcon = null,
                 keyboardType = KeyboardType.Email,
                 hint = stringResource(id = R.string.example_email),
@@ -141,7 +144,6 @@ private fun LoginScreen(
             val annotatedString = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
-                        fontFamily = Poppins,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 ) {
@@ -154,7 +156,6 @@ private fun LoginScreen(
                         style = SpanStyle(
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.primary,
-                            fontFamily = Poppins
                         )
                     ) {
                         append(stringResource(id = R.string.sign_up))
