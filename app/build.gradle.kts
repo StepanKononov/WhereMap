@@ -23,12 +23,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://localhost:8080/api/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"http://localhost:8080/api/\"")
         }
     }
     compileOptions {
@@ -39,6 +43,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     kapt {
@@ -86,7 +91,7 @@ dependencies {
     implementation("com.mapbox.extension:maps-compose:11.9.0")
 
     // tooling
-    implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.32.0")
 
     // room
     implementation("androidx.room:room-runtime:2.6.1")

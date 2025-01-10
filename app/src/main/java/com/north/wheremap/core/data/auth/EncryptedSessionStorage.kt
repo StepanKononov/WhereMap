@@ -1,6 +1,7 @@
 package com.north.wheremap.core.data.auth
 
 import android.content.SharedPreferences
+import com.north.wheremap.core.di.AuthSharedPreferences
 import com.north.wheremap.core.domain.auth.AuthInfo
 import com.north.wheremap.core.domain.auth.SessionStorage
 import kotlinx.coroutines.Dispatchers
@@ -9,6 +10,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class EncryptedSessionStorage(
+    @AuthSharedPreferences
     private val sharedPreferences: SharedPreferences
 ) : SessionStorage {
 

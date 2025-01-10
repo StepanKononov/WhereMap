@@ -2,6 +2,7 @@ package com.north.wheremap.core.data.di
 
 import com.north.wheremap.core.data.auth.EncryptedSessionStorage
 import com.north.wheremap.core.data.collection.CollectionRepositoryImpl
+import com.north.wheremap.core.data.networking.HttpClientFactory
 import com.north.wheremap.core.data.point.PointRepositoryImpl
 import com.north.wheremap.core.domain.auth.SessionStorage
 import com.north.wheremap.core.domain.collection.CollectionRepository
@@ -10,6 +11,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.ktor.client.HttpClient
 import javax.inject.Singleton
 
 
@@ -28,5 +30,9 @@ interface CoreDataModule {
     @Binds
     @Singleton
     fun bindSessionStorage(impl: EncryptedSessionStorage): SessionStorage
+
+    @Binds
+    @Singleton
+    fun bindHttpClientFactory(factory: HttpClientFactory): HttpClient = factory.build()
 
 }
