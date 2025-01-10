@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val httpClient: HttpClient,
-    @AuthSharedPreferences
     private val sessionStorage: SessionStorage
 ) : AuthRepository {
 

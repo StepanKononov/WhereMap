@@ -113,7 +113,7 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                     }
                 },
                 onSuccessfulRegistration = {
-                    navController.navigate(LoginRoute)
+                    navController.navigate(MainGraphRoute)
                 }
             )
         }

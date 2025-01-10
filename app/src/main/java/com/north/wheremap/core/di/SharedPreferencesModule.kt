@@ -15,9 +15,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class SharedPreferencesModule {
 
-    @Provides
     @Singleton
     @AuthSharedPreferences
+    @Provides
     fun provideAuthPreference(application: Application): SharedPreferences {
         return EncryptedSharedPreferences(
             application,

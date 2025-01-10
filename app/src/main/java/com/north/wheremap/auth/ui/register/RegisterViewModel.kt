@@ -3,7 +3,12 @@ package com.north.wheremap.auth.ui.register
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.north.wheremap.R
+import com.north.wheremap.auth.domain.AuthRepository
 import com.north.wheremap.auth.domain.UserDataValidator
+import com.north.wheremap.core.domain.utils.DataError
+import com.north.wheremap.core.domain.utils.Result
+import com.north.wheremap.core.ui.asStringRes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val userDataValidator: UserDataValidator,
+    private val repository: AuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RegisterState())
@@ -43,7 +49,11 @@ class RegisterViewModel @Inject constructor(
                 }
             }
 
-            else -> Unit
+            RegisterAction.OnLoginClick -> {
+                viewModelScope.launch {
+                    eventChannel.send(RegisterEvent.GoToLogin)
+                }
+            }
         }
     }
 
@@ -60,6 +70,7 @@ class RegisterViewModel @Inject constructor(
                 }
             }
             .launchIn(viewModelScope)
+
         snapshotFlow { _state.value.password.text }
             .onEach { password ->
                 val passwordValidationState =
@@ -78,7 +89,28 @@ class RegisterViewModel @Inject constructor(
 
     private fun register() {
         viewModelScope.launch {
+            _state.update { it.copy(isRegistering = true) }
+            val result = repository.register(
+                email = state.value.email.text.toString().trim(),
+                password = state.value.password.text.toString()
+            )
+            _state.update { it.copy(isRegistering = true) }
 
+            when (result) {
+                is Result.Error -> {
+                    if (result.error == DataError.Network.CONFLICT) {
+                        eventChannel.send(
+                            RegisterEvent.Error(R.string.error_email_exists)
+                        )
+                    } else {
+                        eventChannel.send(RegisterEvent.Error(result.error.asStringRes()))
+                    }
+                }
+
+                is Result.Success -> {
+                    eventChannel.send(RegisterEvent.RegistrationSuccess)
+                }
+            }
         }
     }
 }

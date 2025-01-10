@@ -7,8 +7,8 @@ import com.north.wheremap.core.data.point.PointRepositoryImpl
 import com.north.wheremap.core.domain.auth.SessionStorage
 import com.north.wheremap.core.domain.collection.CollectionRepository
 import com.north.wheremap.core.domain.point.PointRepository
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
@@ -17,22 +17,22 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface CoreDataModule {
+class CoreDataModule {
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindCollectionRepository(impl: CollectionRepositoryImpl): CollectionRepository
+    fun provideCollectionRepository(impl: CollectionRepositoryImpl): CollectionRepository = impl
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindPointRepository(impl: PointRepositoryImpl): PointRepository
+    fun providePointRepository(impl: PointRepositoryImpl): PointRepository = impl
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindSessionStorage(impl: EncryptedSessionStorage): SessionStorage
+    fun provideSessionStorage(impl: EncryptedSessionStorage): SessionStorage = impl
 
-    @Binds
+    @Provides
     @Singleton
-    fun bindHttpClientFactory(factory: HttpClientFactory): HttpClient = factory.build()
+    fun provideHttpClientFactory(factory: HttpClientFactory): HttpClient = factory.build()
 
 }

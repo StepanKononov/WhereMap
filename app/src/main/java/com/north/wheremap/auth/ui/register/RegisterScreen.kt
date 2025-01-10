@@ -76,6 +76,8 @@ fun RegisterScreenRoot(
                 ).show()
                 onSuccessfulRegistration()
             }
+
+            RegisterEvent.GoToLogin -> onSignInClick()
         }
     }
 

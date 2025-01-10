@@ -8,10 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-class EncryptedSessionStorage(
-    @AuthSharedPreferences
-    private val sharedPreferences: SharedPreferences
+class EncryptedSessionStorage @Inject constructor(
+    @AuthSharedPreferences private val sharedPreferences: SharedPreferences
 ) : SessionStorage {
 
     override suspend fun get(): AuthInfo? {
