@@ -13,4 +13,12 @@ class ChronologyViewModel @Inject constructor(
 ) : ViewModel() {
     private val chronologyRoute: ChronologyRoute = savedStateHandle.toRoute()
     val id: Long = chronologyRoute.id
+
+
+    // Пойти в PointLocalDataSource и получить список Point по id коллекции
+    // Созадть events: MoveToPoint(location)
+    // В Actions - переход к следующей/предыдущей точке
+    // На UI: слушать events, на каждый MoveToPoint переводить камеру на нужную точку (см flyToLocation)
+    //        отобажать список точек на карте, см renderLocationMarker
+
 }

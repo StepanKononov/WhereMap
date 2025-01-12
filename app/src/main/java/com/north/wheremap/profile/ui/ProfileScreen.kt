@@ -34,4 +34,10 @@ fun ProfileScreen(
         )
     }
 
+
+    // во ViewModel из CollectionRepository получить список всех коллекций пользователя и отобразить из
+    // На UI добавить кнопку в ToAppBar logout - при клике отпралять ивент в ProfileScreen,
+    // в ProfileScreen наблюдать за этим ивентом и вызвать колбэк из ProfileScreenRoot,
+    // колбэк доходит до NavRoot и там переходим на граф Auth. Можжно глянуть как в AddToCollectionEvents.Confirm
+
 }

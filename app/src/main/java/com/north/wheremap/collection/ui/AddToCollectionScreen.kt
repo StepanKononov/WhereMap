@@ -70,7 +70,13 @@ fun AddToCollectionRoot(
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
             AddToCollectionEvents.Confirm -> onConfirm()
-            AddToCollectionEvents.NavigateToCreateCollectionScreen -> onClickCreateCollection()
+            AddToCollectionEvents.NavigateToCreateCollectionScreen -> {
+                // CreateCollectionScreen
+                // В CollectionRepository можно вызвать upsertCollection
+                // во viewModel вызываем upsert и навигируемся назад.
+                // важно все акшны viewModel вызывать как runAction (учитывая жизненный цикл экрана)
+                onClickCreateCollection()
+            }
         }
     }
 

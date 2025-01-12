@@ -36,7 +36,8 @@ fun NavigationRoot(
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = if (isLoggedIn) MainGraphRoute else AuthRoute
+        //startDestination = if (isLoggedIn) MainGraphRoute else AuthRoute
+        startDestination = MainGraphRoute // For Artem skip register
     ) {
 
         authGraph(navController)
