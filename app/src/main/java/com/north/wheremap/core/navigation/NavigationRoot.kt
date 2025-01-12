@@ -30,11 +30,13 @@ import com.north.wheremap.profile.ui.ProfileScreen
 import kotlin.reflect.typeOf
 
 @Composable
-fun NavigationRoot() {
+fun NavigationRoot(
+    isLoggedIn: Boolean,
+) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AuthRoute,
+        startDestination = if (isLoggedIn) MainGraphRoute else AuthRoute
     ) {
 
         authGraph(navController)
