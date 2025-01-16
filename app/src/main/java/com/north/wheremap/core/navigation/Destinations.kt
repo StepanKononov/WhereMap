@@ -16,7 +16,7 @@ data object MapRoute
 data object ProfileRoute
 
 @Serializable
-data class ChronologyRoute(val id: Long)
+data class ChronologyRoute(val id: Int)
 
 @Serializable
 data class AddToCollectionRoute(val point: Location)

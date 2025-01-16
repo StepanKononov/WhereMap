@@ -177,6 +177,10 @@ fun MainNavGraph(
             ProfileScreen(
                 onChronologyClick = { chronology ->
                     openChronology(chronology)
+                },
+                onLogout = {
+                    // todo - пока похуй
+                    navController.navigate(MapRoute)
                 }
             )
         }
