@@ -12,7 +12,7 @@ class ChronologyViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val chronologyRoute: ChronologyRoute = savedStateHandle.toRoute()
-    val id: Long = chronologyRoute.id
+    val id: Int = chronologyRoute.id
 
 
     // Пойти в PointLocalDataSource и получить список Point по id коллекции

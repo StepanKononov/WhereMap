@@ -1,43 +1,133 @@
 package com.north.wheremap.profile.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.north.wheremap.R
+import com.north.wheremap.collection.ui.CollectionUI
+import com.north.wheremap.collection.ui.MapPreview
 import com.north.wheremap.core.navigation.ChronologyRoute
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     onChronologyClick: (ChronologyRoute) -> Unit,
+    onLogout: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
-    // TODO: aватарка?, logout и список собсвтенных подборок?
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .fillMaxWidth()
-            .windowInsetsPadding(WindowInsets.systemBars)
-            .clickable {
-                onChronologyClick(ChronologyRoute(2))
-            },
-    ) {
-        Text(
-            text = "Profile Screen",
-            modifier = Modifier.fillMaxSize(),
-        )
+    val state = viewModel.state.collectAsStateWithLifecycle()
+    val exampleCollection: CollectionUI =  CollectionUI("1","JapanTrip","Out trip to Japan!!!", "トキオ", true)
+    LaunchedEffect(viewModel) {
+        viewModel.events.collect { event ->
+            when (event) {
+                ProfileScreenEvents.NavigateToAuth -> onLogout()
+            }
+        }
     }
 
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Профиль") },
+                actions = {
+                    IconButton(onClick = { viewModel.onAction(ProfileScreenActions.Logout) }) {
+                        Icon(
+                            imageVector = Icons.Default.ExitToApp,
+                            contentDescription = "Cъебаться"
+                        )
+                    }
+                }
+            )
+        },
+        modifier = modifier
+    ) { paddingValues ->
+        LazyColumn(
+            contentPadding = paddingValues,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+        ) {
+            items(state.value.collections, key = { it.id }) { collection ->
+                CollectionItem(
+                    collection = collection,
+                    onClick = { onChronologyClick(ChronologyRoute(collection.id.toIntOrNull() ?: 0)) }
+                )
+            }
 
-    // во ViewModel из CollectionRepository получить список всех коллекций пользователя и отобразить из
-    // На UI добавить кнопку в ToAppBar logout - при клике отпралять ивент в ProfileScreen,
-    // в ProfileScreen наблюдать за этим ивентом и вызвать колбэк из ProfileScreenRoot,
-    // колбэк доходит до NavRoot и там переходим на граф Auth. Можжно глянуть как в AddToCollectionEvents.Confirm
+            item {
+                CollectionItem(
+                    collection = exampleCollection,
+                    onClick = { onChronologyClick(ChronologyRoute(exampleCollection.id.toIntOrNull() ?: 0)) }
+                )
+            }
+        }
+    }
+}
 
+@Composable
+fun CollectionItem(
+    collection: CollectionUI,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable(onClick = onClick),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(64.dp)
+                    .padding(end = 16.dp)
+                    .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+            ) {
+                // Placeholder for image
+            }
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .align(Alignment.CenterVertically)
+            ) {
+                Text(
+                    text = collection.name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = collection.description,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = if (collection.isPrivate)
+                        stringResource(R.string.private_collection)
+                    else
+                        stringResource(R.string.public_collection),
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+        }
+    }
 }
