@@ -22,6 +22,9 @@ data class ChronologyRoute(val id: Int)
 data class AddToCollectionRoute(val point: Location)
 
 @Serializable
+data object CreateCollectionRoute
+
+@Serializable
 data object AuthRoute
 
 @Serializable
