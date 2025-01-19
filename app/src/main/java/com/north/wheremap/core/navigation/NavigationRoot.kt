@@ -22,6 +22,7 @@ import com.north.wheremap.auth.ui.IntroScreenRoot
 import com.north.wheremap.auth.ui.login.LoginScreenRoot
 import com.north.wheremap.auth.ui.register.RegisterScreenRoot
 import com.north.wheremap.collection.ui.AddToCollectionRoot
+import com.north.wheremap.collection.ui.CreateCollectionRoot
 import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.feeds.ui.FeedScreen
 import com.north.wheremap.map.ui.MapScreenRoot
@@ -73,6 +74,44 @@ fun NavigationRoot(
             AddToCollectionRoot(
                 onConfirm = {
                     navController.navigateUp()
+                },
+                onClickCreateCollection = {
+                    navController.navigate(CreateCollectionRoute)
+                }
+            )
+        }
+
+        composable<CreateCollectionRoute>(
+            typeMap = mapOf(
+                typeOf<Location>() to CustomNavType.LocationType
+            ),
+            enterTransition = {
+                fadeIn(
+                    animationSpec = tween(
+                        300, easing = LinearEasing
+                    )
+                ) + slideIntoContainer(
+                    animationSpec = tween(300, easing = EaseIn),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Start
+                )
+            },
+            exitTransition = {
+                fadeOut(
+                    animationSpec = tween(
+                        300, easing = LinearEasing
+                    )
+                ) + slideOutOfContainer(
+                    animationSpec = tween(300, easing = EaseOut),
+                    towards = AnimatedContentTransitionScope.SlideDirection.End
+                )
+            }
+        ) {
+            CreateCollectionRoot(
+                onConfirm = {
+                    navController.navigateUp()
+                },
+                onNavigateBack = {
+                    navController.popBackStack()
                 }
             )
         }
