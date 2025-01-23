@@ -56,6 +56,8 @@ import com.mapbox.maps.extension.compose.style.GenericStyle
 import com.north.wheremap.R
 import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.core.ui.ObserveAsEvents
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 
 @Composable
@@ -71,16 +73,10 @@ fun AddToCollectionRoot(
         when (event) {
             AddToCollectionEvents.Confirm -> onConfirm()
             AddToCollectionEvents.NavigateToCreateCollectionScreen -> {
-                // CreateCollectionScreen
-                // В CollectionRepository можно вызвать upsertCollection
-                // во viewModel вызываем upsert и навигируемся назад.
-                // важно все акшны viewModel вызывать как runAction (учитывая жизненный цикл экрана)
                 onClickCreateCollection()
             }
         }
     }
-
-
 
     AddToCollectionContent(
         state = state.value,

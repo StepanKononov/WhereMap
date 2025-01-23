@@ -1,5 +1,6 @@
 package com.north.wheremap
 
+import android.util.Log
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,13 +49,15 @@ fun MainScreen(
             val currentDestination = entry?.destination
             NavigationBar {
                 items.forEach { (label, icon, destination) ->
+                    val isSelected = currentDestination?.hierarchy?.any {
+                        it.hasRoute(destination::class)
+                    } == true
                     NavigationBarItem(
                         label = { Text(stringResource(label)) },
                         icon = { Icon(icon, contentDescription = stringResource(label)) },
-                        selected = currentDestination?.hierarchy?.any {
-                            it.hasRoute(destination::class)
-                        } == true,
+                        selected = isSelected,
                         onClick = {
+                            if (isSelected) return@NavigationBarItem
                             navController.navigate(destination) {
                                 popUpTo(navController.graph.startDestinationId) {
                                     saveState = true
