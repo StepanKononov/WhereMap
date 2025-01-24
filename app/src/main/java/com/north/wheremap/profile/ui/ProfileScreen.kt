@@ -1,13 +1,26 @@
 package com.north.wheremap.profile.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -18,7 +31,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.north.wheremap.R
 import com.north.wheremap.collection.ui.CollectionUI
-import com.north.wheremap.collection.ui.MapPreview
 import com.north.wheremap.core.navigation.ChronologyRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +42,6 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
-    val exampleCollection: CollectionUI =  CollectionUI("1","JapanTrip","Out trip to Japan!!!", "トキオ", true)
     LaunchedEffect(viewModel) {
         viewModel.events.collect { event ->
             when (event) {
@@ -67,13 +78,6 @@ fun ProfileScreen(
                     onClick = { onChronologyClick(ChronologyRoute(collection.id)) }
                 )
             }
-
-            item {
-                CollectionItem(
-                    collection = exampleCollection,
-                    onClick = { onChronologyClick(ChronologyRoute(exampleCollection.id)) }
-                )
-            }
         }
     }
 }
@@ -96,14 +100,7 @@ fun CollectionItem(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(64.dp)
-                    .padding(end = 16.dp)
-                    .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
-            ) {
-                // Placeholder for image
-            }
+
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -111,7 +108,7 @@ fun CollectionItem(
             ) {
                 Text(
                     text = collection.name,
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(Modifier.height(4.dp))
