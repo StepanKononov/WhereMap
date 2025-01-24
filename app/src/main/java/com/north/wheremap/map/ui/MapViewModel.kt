@@ -2,9 +2,12 @@ package com.north.wheremap.map.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.north.wheremap.core.di.ApplicationScope
+import com.north.wheremap.core.domain.collection.CollectionRepository
 import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.map.location.LocationObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +24,9 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 class MapViewModel @Inject constructor(
     private val locationObserver: LocationObserver,
+    private val collectionRepository: CollectionRepository,
+    @ApplicationScope
+    private val applicationScope: CoroutineScope,
 ) : ViewModel() {
 
     private val isObservingLocation = MutableStateFlow(false)
@@ -36,6 +42,14 @@ class MapViewModel @Inject constructor(
             SharingStarted.Lazily,
             null
         )
+
+    init {
+        // TODO: это не тут должно быть, а во ViewModel экрана с табами? Но тут просто первый экран после логина
+        applicationScope.launch {
+            collectionRepository.fetchCollections()
+        }
+    }
+
 
     private val _selectedPoint = MutableStateFlow<Location?>(null)
     val selectedPoint = _selectedPoint.asStateFlow()

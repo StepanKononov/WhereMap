@@ -14,7 +14,7 @@ class CollectionRemoteDataSourceImpl @Inject constructor(
     private val httpClient: HttpClient,
 ) : CollectionRemoteDataSource {
 
-    override suspend fun getUserCollection(): Result<List<Collection>, DataError.Network> {
+    override suspend fun getUserCollections(): Result<List<Collection>, DataError.Network> {
         return httpClient.get<List<CollectionDto>>(
             route = "/mycollections",
         ).map { collectionDtos ->

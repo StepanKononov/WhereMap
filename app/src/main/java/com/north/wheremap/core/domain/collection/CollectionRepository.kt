@@ -8,6 +8,8 @@ interface CollectionRepository {
 
     fun getUserCollection(): Flow<List<Collection>>
 
+    suspend fun fetchCollections(): EmptyResult<DataError>
+
     suspend fun upsertCollection(collection: Collection): EmptyResult<DataError>
 
     suspend fun deleteCollectionById(id: String)

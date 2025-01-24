@@ -2,8 +2,11 @@ package com.north.wheremap
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.north.wheremap.core.di.ApplicationScope
 import com.north.wheremap.core.domain.auth.SessionStorage
+import com.north.wheremap.core.domain.collection.CollectionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
@@ -14,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val sessionStorage: SessionStorage
+    private val sessionStorage: SessionStorage,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(MainState())
