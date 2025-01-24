@@ -62,6 +62,7 @@ suspend inline fun <reified T> call(execute: () -> HttpResponse): Result<T, Data
     } catch (e: UnresolvedAddressException) {
         return Result.Error(DataError.Network.NO_INTERNET)
     } catch (e: SerializationException) {
+        throw e
         return Result.Error(DataError.Network.SERIALIZATION)
     } catch (e: Exception) {
         if (e is CancellationException) throw e
