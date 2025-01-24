@@ -13,4 +13,6 @@ interface PointLocalDataSource {
     suspend fun upsertPoint(point: Point): Result<PointId, DataError.Local>
 
     suspend fun deletePointById(pointId: String)
+
+    suspend fun deleteAllPoints()
 }

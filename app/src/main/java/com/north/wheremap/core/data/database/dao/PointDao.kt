@@ -18,4 +18,7 @@ interface PointDao {
     @Query("DELETE FROM point WHERE id=:id")
     suspend fun deletePoint(id: String)
 
+    @Query("DELETE FROM point")
+    fun deleteAllPoints()
+
 }

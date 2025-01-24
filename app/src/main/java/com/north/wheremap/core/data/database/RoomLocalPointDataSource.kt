@@ -40,4 +40,8 @@ class RoomLocalPointDataSource @Inject constructor(
     override suspend fun deletePointById(pointId: String) {
         pointDao.deletePoint(pointId)
     }
+
+    override suspend fun deleteAllPoints() {
+        pointDao.deleteAllPoints()
+    }
 }

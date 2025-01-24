@@ -53,6 +53,10 @@ class PointRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteAllPoints() {
+        localPointDataSource.deleteAllPoints()
+    }
+
 
     override suspend fun upsertPoint(point: Point): EmptyResult<DataError> {
         val localResult = localPointDataSource.upsertPoint(point)

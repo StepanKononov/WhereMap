@@ -19,7 +19,7 @@ fun FeedScreen(
     onChronologyClick: (ChronologyRoute) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // TODO: лента с подборками других пользователей
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier

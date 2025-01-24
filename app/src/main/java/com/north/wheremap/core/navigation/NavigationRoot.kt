@@ -147,6 +147,13 @@ fun NavigationRoot(
                 },
                 openAddToCollection = { addToCollection ->
                     navController.navigate(addToCollection)
+                },
+                onLogoutClick = {
+                    navController.navigate(AuthRoute) {
+                        popUpTo(MainGraphRoute) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
@@ -213,6 +220,7 @@ fun MainNavGraph(
     navController: NavHostController,
     openChronology: (ChronologyRoute) -> Unit,
     openAddToCollection: (AddToCollectionRoute) -> Unit,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
@@ -241,10 +249,7 @@ fun MainNavGraph(
                 onChronologyClick = { chronology ->
                     openChronology(chronology)
                 },
-                onLogout = {
-                    // todo - пока похуй
-                    navController.navigate(MapRoute)
-                }
+                onLogout = onLogoutClick
             )
         }
     }

@@ -1,6 +1,5 @@
 package com.north.wheremap
 
-import android.util.Log
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +33,7 @@ import com.north.wheremap.core.navigation.ProfileRoute
 fun MainScreen(
     openChronology: (ChronologyRoute) -> Unit,
     openAddToCollection: (AddToCollectionRoute) -> Unit,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val navController = rememberNavController()
@@ -77,6 +77,7 @@ fun MainScreen(
             navController,
             openChronology,
             openAddToCollection,
+            onLogoutClick,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
