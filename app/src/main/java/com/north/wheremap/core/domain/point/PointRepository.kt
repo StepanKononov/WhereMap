@@ -11,4 +11,6 @@ interface PointRepository {
     suspend fun upsertPoint(point: Point): EmptyResult<DataError>
 
     suspend fun deletePointById(pointId: String)
+
+    suspend fun fetchPoints(): EmptyResult<DataError>
 }

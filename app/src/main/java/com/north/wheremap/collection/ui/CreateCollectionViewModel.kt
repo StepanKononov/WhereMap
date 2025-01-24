@@ -32,7 +32,10 @@ class CreateCollectionViewModel @Inject constructor(
     fun onAction(action: CreateCollectionActions) {
         when (action) {
             CreateCollectionActions.ConfirmSaveCollection -> saveCollection()
-            is CreateCollectionActions.UpdateCollectionDescription -> updateCollectionDescription(action.description)
+            is CreateCollectionActions.UpdateCollectionDescription -> updateCollectionDescription(
+                action.description
+            )
+
             is CreateCollectionActions.UpdateCollectionName -> updateCollectionName(action.name)
             is CreateCollectionActions.UpdateCollectionCity -> updateCollectionCity(action.city)
             is CreateCollectionActions.UpdateCollectionPrivacy -> updateCollectionPrivacy(action.isPrivate)
@@ -43,10 +46,10 @@ class CreateCollectionViewModel @Inject constructor(
         viewModelScope.launch {
             val curState = state.value
             val collection = Collection(
-                name = curState.collectionName,
+                name = curState.collectionName.ifBlank { "" },
                 description = curState.collectionDescription.ifBlank { "" },
                 isPrivate = curState.isCollectionPrivate,
-                city = curState.collectionCity,
+                city = curState.collectionCity?.ifBlank { "" } ?: "",
             )
             collectionRepository.upsertCollection(collection)
             eventChannel.send(CreateCollectionEvents.Confirm)

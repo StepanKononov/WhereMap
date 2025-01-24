@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class Collection(
     val id: String? = null, // null for new collection
     val name: String,
-    val description: String? = null,
-    val city: String? = null,
+    val description: String = "",
+    val city: String = "",
     val isPrivate: Boolean
 )

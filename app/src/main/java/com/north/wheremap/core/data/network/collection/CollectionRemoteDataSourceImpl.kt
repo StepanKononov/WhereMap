@@ -27,7 +27,6 @@ class CollectionRemoteDataSourceImpl @Inject constructor(
             route = "/collections",
             body = collection
         ).map { it.toCollection() }
-
     }
 
     override suspend fun deleteCollection(id: String) = Unit

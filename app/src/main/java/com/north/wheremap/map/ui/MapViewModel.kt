@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.north.wheremap.core.di.ApplicationScope
 import com.north.wheremap.core.domain.collection.CollectionRepository
 import com.north.wheremap.core.domain.location.Location
+import com.north.wheremap.core.domain.point.PointRepository
 import com.north.wheremap.map.location.LocationObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +26,7 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     private val locationObserver: LocationObserver,
     private val collectionRepository: CollectionRepository,
+    private val pointRepository: PointRepository,
     @ApplicationScope
     private val applicationScope: CoroutineScope,
 ) : ViewModel() {
@@ -47,6 +49,7 @@ class MapViewModel @Inject constructor(
         // TODO: это не тут должно быть, а во ViewModel экрана с табами? Но тут просто первый экран после логина
         applicationScope.launch {
             collectionRepository.fetchCollections()
+            pointRepository.fetchPoints()
         }
     }
 

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class CollectionDto(
     val id: String,
     val name: String,
-    val description: String?,
-    val city: String?,
+    val description: String,
+    val city: String,
     val isPrivate: Boolean,
 )

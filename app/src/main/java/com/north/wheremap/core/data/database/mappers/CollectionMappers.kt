@@ -7,8 +7,9 @@ import org.bson.types.ObjectId
 fun CollectionEntity.toDomain() = Collection(
     id = this.id,
     name = this.name,
-    description = this.description,
-    city = this.city,
+    // Todo: notnull нужно было для работы с сервером, null отбивает 400. Нормальный запрос GetCollectionRequest решит проблему но мне лень
+    description = this.description ?: "",
+    city = this.city ?: "",
     isPrivate = this.isPrivate
 )
 
