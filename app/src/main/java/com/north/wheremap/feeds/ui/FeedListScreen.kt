@@ -26,7 +26,7 @@ fun FeedScreen(
             .fillMaxWidth()
             .windowInsetsPadding(WindowInsets.systemBars)
             .clickable {
-                onChronologyClick(ChronologyRoute(1))
+                onChronologyClick(ChronologyRoute("w"))
             },
     ) {
         Text(

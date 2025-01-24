@@ -64,14 +64,14 @@ fun ProfileScreen(
             items(state.value.collections, key = { it.id }) { collection ->
                 CollectionItem(
                     collection = collection,
-                    onClick = { onChronologyClick(ChronologyRoute(collection.id.toIntOrNull() ?: 0)) }
+                    onClick = { onChronologyClick(ChronologyRoute(collection.id)) }
                 )
             }
 
             item {
                 CollectionItem(
                     collection = exampleCollection,
-                    onClick = { onChronologyClick(ChronologyRoute(exampleCollection.id.toIntOrNull() ?: 0)) }
+                    onClick = { onChronologyClick(ChronologyRoute(exampleCollection.id)) }
                 )
             }
         }

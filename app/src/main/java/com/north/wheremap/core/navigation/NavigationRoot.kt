@@ -26,7 +26,7 @@ import com.north.wheremap.collection.ui.CreateCollectionRoot
 import com.north.wheremap.core.domain.location.Location
 import com.north.wheremap.feeds.ui.FeedScreen
 import com.north.wheremap.map.ui.MapScreenRoot
-import com.north.wheremap.map.ui.chronology.ChronologyScreen
+import com.north.wheremap.map.ui.chronology.ChronologyScreenRoot
 import com.north.wheremap.profile.ui.ProfileScreen
 import kotlin.reflect.typeOf
 
@@ -42,8 +42,33 @@ fun NavigationRoot(
     ) {
 
         authGraph(navController)
-        composable<ChronologyRoute> {
-            ChronologyScreen()
+        composable<ChronologyRoute>(
+            enterTransition = {
+                fadeIn(
+                    animationSpec = tween(
+                        300, easing = LinearEasing
+                    )
+                ) + slideIntoContainer(
+                    animationSpec = tween(300, easing = EaseIn),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Start
+                )
+            },
+            exitTransition = {
+                fadeOut(
+                    animationSpec = tween(
+                        300, easing = LinearEasing
+                    )
+                ) + slideOutOfContainer(
+                    animationSpec = tween(300, easing = EaseOut),
+                    towards = AnimatedContentTransitionScope.SlideDirection.End
+                )
+            }
+        ) {
+            ChronologyScreenRoot(
+                onBackPressed = {
+                    navController.navigateUp()
+                }
+            )
         }
 
         composable<AddToCollectionRoute>(
